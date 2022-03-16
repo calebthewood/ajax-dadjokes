@@ -13,11 +13,8 @@ const dadJokesDisplay = $(".dad-jokes");
 //send api request to dadjokes
 async function getDadJokes(evt) {
   const tenJokes = "https://icanhazdadjoke.com/slack";
-  const limit = 10;
-
-  const dadJokes = await axios.get(tenJokes);
-
-  console.log(dadJokes.data);
+  const dadJoke = await axios.get(tenJokes);
+  return  dadJoke.attachments[0].fallback;
 }
 getDadJokes();
 // conductor
