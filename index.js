@@ -15,15 +15,25 @@ const dadJokesDisplay = $(".dad-jokes");
 
 //send api request to dadjokes
 async function getDadJokes(evt) {
-  const tenJokes = "https://icanhazdadjoke.com/slack";
-  for(let i = 1; i <= 10; i++){
-    let dadJoke = await axios.get(tenJokes)
-    //data.attachments[0].fallback;
-    dadJokesDisplay.append(`<div>${dadJoke.data.attachments[0].fallback} </div>`)
-  }
-  console.log(dadJokeStr)
-  createAppendJokes(dadJokeStr)
-}
+  const tenJokes = "https://icanhazdadjoke.com/search?limit=10";
+
+    let dadJoke = await axios.get(tenJokes, {
+      headers: {
+        "Accept" : "application/json"
+      }
+    });
+
+    dadJoke.data.results.forEach(element => {
+      dadJokesDisplay.append(`
+      <p>${element.joke}</p>
+      <span>0 votes</span>
+      <button class="up">🔼</button>
+      <button class="down">🔽</button>
+      `)
+    });
+    console.log(dadJoke.data.results);
+  };
+
 //return dadJokestr
 getDadJokes();
 // conductor
